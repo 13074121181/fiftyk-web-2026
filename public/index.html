@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071a16"><title>五十K · 朋友局</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div class="bg-light bg-light-1"></div><div class="bg-light bg-light-2"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-main">五十<span>K</span><i>♥</i></div>
+      <div class="brand-sub">经典四人对家 · FRIENDS TABLE</div>
+    </div>
+    <div class="top-status"><span class="status-dot"></span><span id="status">未连接</span></div>
+    <nav class="top-actions">
+      <button data-modal="settings" aria-label="设置"><span>⚙</span><em>设置</em></button>
+      <button data-modal="records" aria-label="战绩"><span>▥</span><em>战绩</em></button>
+      <button data-modal="help" aria-label="帮助"><span>?</span><em>帮助</em></button>
+      <button id="exitBtn" aria-label="退出"><span>⇥</span><em>退出</em></button>
+    </nav>
+  </header>
+
+  <main class="main-wrap">
+    <section id="lobby" class="lobby-screen">
+      <div class="lobby-card">
+        <div class="lobby-logo">五十K</div>
+        <div class="lobby-kicker">四人对家 · 朋友局</div>
+        <h1>开一桌，马上开打</h1>
+        <p>160 张牌 · 每人 40 张 · 实时联机 · 不足自动补机器人</p>
+        <div class="lobby-actions">
+          <div class="field-row"><span>昵称</span><input id="name" placeholder="输入你的昵称" maxlength="12"></div>
+          <button id="create" class="cta">创建房间 <span>→</span></button>
+        </div>
+        <div class="or-line"><i></i><span>已有朋友局</span><i></i></div>
+        <div class="join-row"><input id="code" inputmode="numeric" maxlength="6" placeholder="输入 6 位房间号"><button id="join">加入房间</button></div>
+        <div class="lobby-note"><span>●</span> 房间最多 4 人，空位会自动由 AI 接管</div>
+      </div>
+    </section>
+
+    <section id="room" class="room-screen hidden">
+      <div class="room-card">
+        <div class="room-heading">
+          <div><span class="eyebrow">朋友局房间</span><h2>准备开牌</h2></div>
+          <div class="room-code"><small>房间号</small><strong id="roomCode">------</strong><button id="copyCode">复制</button></div>
+        </div>
+        <div id="seats" class="room-seats"></div>
+        <div class="room-footer"><div id="notice" class="notice">等待玩家加入……</div><button id="start" class="cta">开始游戏 <span>→</span></button></div>
+      </div>
+    </section>
+
+    <section id="table" class="game-screen hidden">
+      <div class="table-wood">
+        <div class="felt">
+          <div class="felt-texture"></div>
+          <div class="table-title-mark">五十K</div>
+          <div class="table-topbar">
+            <div class="table-brand">五十<span>K</span></div>
+            <div class="table-room"><span>房间号</span><b id="roomCodeTop">------</b><button id="copyCodeTop">复制</button></div>
+            <div class="round-pill"><span class="live-dot"></span>第 <b id="handNo">1</b> 把</div>
+            <div class="my-score-pill">我的积分 <strong id="myScore">0</strong></div>
+          </div>
+
+          <div id="seatTop" class="player-card player-top"></div>
+          <div id="seatLeft" class="player-card player-left"></div>
+          <div id="seatRight" class="player-card player-right"></div>
+          <div id="seatBottom" class="player-card player-bottom"></div>
+
+          <aside class="score-panel">
+            <div class="panel-title"><span>本盘积分</span><small>累计</small></div>
+            <div class="score-team team-a"><span><i></i>我方</span><strong id="teamAScore">0</strong></div>
+            <div class="score-team team-b"><span><i></i>对方</span><strong id="teamBScore">0</strong></div>
+            <div class="score-divider"></div>
+            <div class="score-meta"><span>本盘第</span><b id="handNoSide">1</b><span>把</span></div>
+          </aside>
+
+          <div class="turn-banner" id="turnBanner"><span class="turn-ring"></span><span>当前轮到</span><b id="turnName">—</b><em>出牌</em></div>
+
+          <div class="center-stage">
+            <div id="lastPlay" class="last-play"><div class="empty-orbit">♠</div><strong>等待出牌</strong><small>首轮由庄家先出</small></div>
+            <div id="result" class="settlement-card hidden"></div>
+          </div>
+
+          <div class="rank-panel">
+            <div class="panel-title"><span>本把名次</span><small>ORDER</small></div>
+            <div id="rankList" class="rank-list"></div>
+          </div>
+
+          <div class="ai-help"><div class="ai-avatar">AI</div><div><b>机器人接管</b><small>空位自动出牌</small></div></div>
+
+          <div class="hand-zone">
+            <div class="hand-caption"><span>我的手牌</span><b id="handCount">40张</b></div>
+            <div class="hand" id="hand"></div>
+          </div>
+
+          <div id="controls" class="game-controls">
+            <button id="sortPoint" class="blue-btn"><span>▦</span>整理·点数</button>
+            <button id="sortRank" class="blue-btn"><span>▤</span>整理·牌序</button>
+            <button id="move50" class="blue-btn special"><span>50</span>五十K</button>
+            <button id="tripleMode" class="blue-btn mode">三张：普通</button>
+            <button id="pass" class="pass-btn">⊘ 不要</button>
+            <button id="play" class="play-btn">▶ 出牌</button>
+            <button id="next" class="next-btn hidden">下一把 →</button>
+          </div>
+
+          <div class="table-footer">
+            <label class="switch-label"><span>三张模式</span><input type="checkbox" id="tripleSwitch"><i></i></label>
+            <div class="footer-spacer"></div>
+            <button class="mini-action" data-modal="chat">💬 <span>聊天</span></button>
+            <button class="mini-action">☺</button><button class="mini-action">🎁</button>
+            <span class="latency"><i></i>32ms</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="modal" class="modal hidden"><div class="modal-backdrop"></div><div class="modal-box"><button class="modal-close" id="modalClose">×</button><div id="modalContent"></div></div></div>
+<div id="toast" class="toast"></div>
+<div class="fx-layer" aria-hidden="true"><div id="fxToast" class="fx-toast"></div><div id="flyLayer" class="fly-layer"></div><div id="particleLayer" class="particle-layer"></div><div id="impactRing" class="impact-ring"></div></div>
+<script src="/app.js"></script>
+<script>
+(function(){
+ const sync=()=>{const g=window.state||null;if(!g)return;const a=g.teamScores||{};const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};set('teamAScore',a.A??0);set('teamBScore',a.B??0);set('handNoSide',g.handNo??1);set('handNo',g.handNo??1);const me=g.players?.find(p=>p.id===window.me);set('handCount',(me?.handCount??g.hand?.length??0)+'张');set('roomCodeTop',document.getElementById('roomCode')?.textContent||'------');};setInterval(sync,200);
+})();
+</script>
+</body></html>
