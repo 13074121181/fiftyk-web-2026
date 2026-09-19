@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: fiftyk-web
+    runtime: docker
+    plan: free
+    healthCheckPath: /health

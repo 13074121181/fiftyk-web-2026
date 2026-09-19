@@ -1,0 +1,17 @@
+{
+  "name": "fiftyk-web",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-strip-types server.js",
+    "test": "node --test --experimental-strip-types src/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}
